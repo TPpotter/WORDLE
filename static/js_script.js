@@ -1,4 +1,17 @@
-var row = '1'
+var inp = document.currentScript.getAttribute('one')
+var word = {};
+var n = -1;
+for (j in inp) {
+    n = n + 1
+    if (inp[j] in word) {
+        word[inp[j]].push(n); }
+    else if (!(inp[j] in word)) {
+        word[inp[j]] = [];
+        word[inp[j]].push(n);
+        }
+    }
+var row = '1';
+
 var letters = {
 "11" : '', "12" : '', "13" : '', "14" : '', "15" : '',
 "21" : '', "22" : '', "23" : '', "24" : '', "25" : '',
@@ -8,6 +21,7 @@ var letters = {
 "61" : '', "62" : '', "63" : '', "64" : '', "65" : '',
 "66": ''
 };
+
 var characters = {
 'a': '1', 'b': '2', 'c': '3', 'd': '4', 'e': '5', 'f': '6', 'g': '7', 'h': '8',
 'i': '9', 'j': '10', 'k': '11', 'l': '12', 'm': '13', 'n': '14', 'o': '15', 'p': '16',
@@ -15,7 +29,9 @@ var characters = {
 'x': '24', 'y': '25', 'z': '26'
 }
 var stop = false
+
 var id = '';
+
 function change_letter(character) {
   if (stop) {
     console.log('function is stopped');
@@ -41,12 +57,19 @@ function change_letter(character) {
   document.getElementById(id).src = 'static/buttons/letter'+ characters[character] +'.png';
   letters[keys[key]] = character
 }
+function check_word(checking_word){
+//    for (i in checking_word) {
+//        if i
+//    }
+}
 
 function enter() {
     if ((letters[String(row + '5')] === '') || (row === '6')) {
         return; }
+    check_word(letters[row + '1'] + letters[row + '2'] + letters[row + '3'] + letters[row + '4'] + letters[row + '5']);
     row = String(Number(row) + 1);
     stop = false;
+
 }
 
 function a() {
