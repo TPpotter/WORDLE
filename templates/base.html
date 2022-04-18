@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Wordle</title>
+    <link rel="icon" type="image/x-icon" href="/static/favicon.png">
     <style>
     body {
             background-image: url("static/background.png");
@@ -10,11 +11,15 @@
         }
 
     </style>
-    <script src="/static/js_script.js" one={{word}}></script>
+    <script>
+        var state = {{ state|safe }};
+
+    </script>
+    <script src="/static/js_script.js"></script>
 </head>
 <body>
 <center>
-<h2 style="color: red">{{word}}</h2>
+<h2 style="color: red">{{ word }}</h2>
 </center>
 <br>
 <br>
@@ -97,6 +102,7 @@
     <input type="image" name=submit value="x" onclick="x()" src="static/buttons/letter24.png" />
     <input type="image" name=submit value="y" onclick="y()" src="static/buttons/letter25.png" />
     <input type="image" name=submit value="z" onclick="z()" src="static/buttons/letter26.png" />
+    <input type="image" name=submit value="delete" onclick="del()" src="static/buttons/delete.png" />
 </center>
 
 

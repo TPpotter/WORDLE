@@ -11,4 +11,4 @@ DATA = json.load(open('static/data.json'))
 def main():
     word = random.choice(DATA['5'])
     if request.method == 'GET':
-        return render_template('base.html', word=word)
+        return render_template('base.html', state=dict(words=DATA['5']))

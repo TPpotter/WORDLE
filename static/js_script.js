@@ -1,4 +1,5 @@
-var inp = document.currentScript.getAttribute('one')
+var data = state['words']
+var inp = document.currentScript.getAttribute('one');
 var word = {};
 var n = -1;
 for (j in inp) {
@@ -36,7 +37,6 @@ function change_letter(character) {
   if (stop) {
     console.log('function is stopped');
     return; }
-//  console.log('loadDoc is fired');
   var keys = Object.keys(letters).sort();
   for (key in keys) {
     if (keys[key] === '66') {
@@ -58,20 +58,39 @@ function change_letter(character) {
   letters[keys[key]] = character
 }
 function check_word(checking_word){
-//    for (i in checking_word) {
-//        if i
-//    }
+    if (!(checking_word in data)) {
+    alert('word "' + checking_word + '" is not in dictionary');
+    letters[row + '5'] = '';
+    document.getElementById(row + '5').src = '/static/input.png';
+    stop = false;
+    return
+    }
+    stop = false;
+    row = String(Number(row) + 1);
 }
 
 function enter() {
     if ((letters[String(row + '5')] === '') || (row === '6')) {
         return; }
     check_word(letters[row + '1'] + letters[row + '2'] + letters[row + '3'] + letters[row + '4'] + letters[row + '5']);
-    row = String(Number(row) + 1);
     stop = false;
 
 }
+//FINISH THIS CODE
+function del() {
+    if (!(letters['11'])) {return}
+    for (n in [0, 1, 2, 3, 4]) {
+        if (!(letters[row + String(Number(n) + 1)])) {
+            letters[row + (Number(n) + 1)] = '';
+            document.getElementById(row + (Number(n) + 1)).src = '/static/input.png';
+            return }
+        if (n === 4) {
+            letters[row + (Number(n) + 1)] = '';
+            document.getElementById(row + (Number(n) + 1)).src = '/static/input.png';
+        }
 
+    }
+}
 function a() {
 
     change_letter('a')
