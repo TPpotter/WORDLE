@@ -1,5 +1,5 @@
 var data = state['words']
-var inp = document.currentScript.getAttribute('one');
+var inp = Math.floor(Math.random() * data.length);
 var word = {};
 var n = -1;
 for (j in inp) {
@@ -13,6 +13,23 @@ for (j in inp) {
     }
 var row = '1';
 
+var links = {
+'a': 'static/buttons/letter1.png', 'b': 'static/buttons/letter2.png',
+'c': 'static/buttons/letter3.png', 'd': 'static/buttons/letter4.png',
+'e': 'static/buttons/letter5.png', 'f': 'static/buttons/letter6.png',
+'g': 'static/buttons/letter7.png', 'h': 'static/buttons/letter8.png',
+'i': 'static/buttons/letter9.png', 'j': 'static/buttons/letter10.png',
+'k': 'static/buttons/letter11.png', 'l': 'static/buttons/letter12.png',
+'m': 'static/buttons/letter13.png', 'n': 'static/buttons/letter14.png',
+'o': 'static/buttons/letter15.png', 'p': 'static/buttons/letter16.png',
+'q': 'static/buttons/letter17.png', 'r': 'static/buttons/letter18.png',
+'s': 'static/buttons/letter19.png', 't': 'static/buttons/letter20.png',
+'u': 'static/buttons/letter21.png', 'v': 'static/buttons/letter22.png',
+'w': 'static/buttons/letter23.png', 'x': 'static/buttons/letter24.png',
+'y': 'static/buttons/letter25.png', 'z': 'static/buttons/letter26.png',
+'': 'static/input.png'
+}
+
 var letters = {
 "11" : '', "12" : '', "13" : '', "14" : '', "15" : '',
 "21" : '', "22" : '', "23" : '', "24" : '', "25" : '',
@@ -23,12 +40,6 @@ var letters = {
 "66": ''
 };
 
-var characters = {
-'a': '1', 'b': '2', 'c': '3', 'd': '4', 'e': '5', 'f': '6', 'g': '7', 'h': '8',
-'i': '9', 'j': '10', 'k': '11', 'l': '12', 'm': '13', 'n': '14', 'o': '15', 'p': '16',
-'q': '17', 'r': '18', 's': '19', 't': '20', 'u': '21', 'v': '22', 'w': '23',
-'x': '24', 'y': '25', 'z': '26'
-}
 var stop = false
 
 var id = '';
@@ -37,32 +48,32 @@ function change_letter(character) {
   if (stop) {
     console.log('function is stopped');
     return; }
-  var keys = Object.keys(letters).sort();
+  var keys = [row + '1', row + '2', row + '3', row + '4', row + '5'];
   for (key in keys) {
     if (keys[key] === '66') {
         stop = true;
     }
-    if ((keys[key][0] === row) && ((letters[keys[key]]) === '')) {
-        id = keys[key];
+    if ((letters[keys[key]]) === '') {
         if (keys[key] === '65') {
-        stop = true; }
+            stop = true; }
         break; }
 
   }
 
-  if (id === '66') {
+  if (keys[key] === '66') {
     console.log('66')
     return
   }
-  document.getElementById(id).src = 'static/buttons/letter'+ characters[character] +'.png';
-  letters[keys[key]] = character
+  letters[keys[key]] = character;
+  draw()
 }
+
 function check_word(checking_word){
     if (!(checking_word in data)) {
     alert('word "' + checking_word + '" is not in dictionary');
     letters[row + '5'] = '';
-    document.getElementById(row + '5').src = '/static/input.png';
     stop = false;
+    draw();
     return
     }
     stop = false;
@@ -76,19 +87,31 @@ function enter() {
     stop = false;
 
 }
-//FINISH THIS CODE
+
 function del() {
-    if (!(letters['11'])) {return}
-    for (n in [0, 1, 2, 3, 4]) {
-        if (!(letters[row + String(Number(n) + 1)])) {
-            letters[row + (Number(n) + 1)] = '';
-            document.getElementById(row + (Number(n) + 1)).src = '/static/input.png';
-            return }
-        if (n === 4) {
-            letters[row + (Number(n) + 1)] = '';
-            document.getElementById(row + (Number(n) + 1)).src = '/static/input.png';
+    if (!(letters[row + '1'])) {return}
+    var row_ = [row + '1', row + '2', row + '3', row + '4', row + '5'];
+    for (n in row_) {
+        var element = row_[n];
+        if (letters[row + '5']) {
+            letters[row + '5'] = '';
+            break
+        }
+        if (letters[row + (Number(element[1]) + 1)] === '') {
+            letters[element] = '';
+            break
         }
 
+    }
+    draw()
+}
+
+function draw() {
+    var keys = Object.keys(letters).sort();
+    for (i in keys) {
+        if (!(keys[i] === '66')) {
+        document.getElementById(keys[i]).src = links[letters[keys[i]]];
+        }
     }
 }
 function a() {
@@ -144,7 +167,7 @@ function m() {
     change_letter('m')
 }
 
-function n() {
+function nn() {
     change_letter('n')
 }
 
