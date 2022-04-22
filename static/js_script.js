@@ -1,5 +1,5 @@
 var data = state['words']
-var inp = Math.floor(Math.random() * data.length);
+var inp = data[Math.floor(Math.random() * data.length)];
 var word = {};
 var n = -1;
 for (j in inp) {
@@ -74,8 +74,10 @@ function check_word(checking_word){
     letters[row + '5'] = '';
     stop = false;
     draw();
-    return
-    }
+    return }
+
+// to make checker
+
     stop = false;
     row = String(Number(row) + 1);
 }
