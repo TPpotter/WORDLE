@@ -69,7 +69,7 @@ function change_letter(character) {
 }
 
 function check_word(checking_word){
-    if (!(checking_word in data)) {
+    if (data.indexOf(checking_word) < 0) {
     alert('word "' + checking_word + '" is not in dictionary');
     letters[row + '5'] = '';
     stop = false;
@@ -77,7 +77,10 @@ function check_word(checking_word){
     return }
 
 // to make checker
-
+    if (data.indexOf(checking_word) >= 0) {
+        alert('great job');
+        return
+    }
     stop = false;
     row = String(Number(row) + 1);
 }
