@@ -111,6 +111,22 @@ function del() {
     draw()
 }
 
+document.addEventListener('keyup', function(event){
+    console.log(!((65 <= event.keyCode <= 90) || (event.key === 'Backspace') || (event.key === 'Enter')));
+    if (!((65 <= event.keyCode <= 90) || (event.key === 'Backspace') || (event.key === 'Enter'))) {
+        return
+    }
+    if ((65 <= event.keyCode) && (event.keyCode <= 90)) {
+        change_letter(event.key)
+    } else if (event.key === 'Backspace') {
+        del()
+    } else if (event.key === 'Enter') {
+        enter()
+    }
+
+});
+
+
 function draw() {
     var keys = Object.keys(letters).sort();
     for (i in keys) {
@@ -223,3 +239,4 @@ function y() {
 function z() {
     change_letter('z')
 }
+
