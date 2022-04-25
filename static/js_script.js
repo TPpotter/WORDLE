@@ -1,6 +1,6 @@
 var data = state['words']
 //var inp = data[Math.floor(Math.random() * data.length)];
-var inp = "aaaaa";
+var inp = "reels";
 var word = {};
 var n = -1;
 for (j in inp) {
@@ -44,19 +44,32 @@ var links = {
 'w1': 'static/correct_buttons/correct_letter23.png', 'x1': 'static/correct_buttons/correct_letter24.png',
 'y1': 'static/correct_buttons/correct_letter25.png', 'z1': 'static/correct_buttons/correct_letter26.png',
 
-'a2': 'static/half_correct_buttons/half_correct_letter1.png', 'b2': 'static/half_correct/buttons/half_correct_letter2.png',
-'c2': 'static/half_correct_buttons/half_correct_letter3.png', 'd2': 'static/half_correct/buttons/half_correct_letter4.png',
-'e2': 'static/half_correct_buttons/half_correct_letter5.png', 'f2': 'static/half_correct/buttons/half_correct_letter6.png',
-'g2': 'static/half_correct_buttons/half_correct_letter7.png', 'h2': 'static/half_correct/buttons/half_correct_letter8.png',
-'i2': 'static/half_correct_buttons/half_correct_letter9.png', 'j2': 'static/half_correct/buttons/half_correct_letter10.png',
-'k2': 'static/half_correct_buttons/half_correct_letter11.png', 'l2': 'static/half_correct/buttons/half_correct_letter12.png',
-'m2': 'static/half_correct_buttons/half_correct_letter13.png', 'n2': 'static/half_correct/buttons/half_correct_letter14.png',
-'o2': 'static/half_correct_buttons/half_correct_letter15.png', 'p2': 'static/half_correct/buttons/half_correct_letter16.png',
-'q2': 'static/half_correct_buttons/half_correct_letter17.png', 'r2': 'static/half_correct/buttons/half_correct_letter18.png',
-'s2': 'static/half_correct_buttons/half_correct_letter19.png', 't2': 'static/half_correct/buttons/half_correct_letter20.png',
-'u2': 'static/half_correct_buttons/half_correct_letter21.png', 'v2': 'static/half_correct/buttons/half_correct_letter22.png',
-'w2': 'static/half_correct_buttons/half_correct_letter23.png', 'x2': 'static/half_correct/buttons/half_correct_letter24.png',
-'y2': 'static/half_correct_buttons/half_correct_letter25.png', 'z2': 'static/half_correct/buttons/half_correct_letter26.png',
+'a2': 'static/half_correct_buttons/half_correct_letter1.png',
+'b2': 'static/half_correct_buttons/half_correct_letter2.png',
+'c2': 'static/half_correct_buttons/half_correct_letter3.png',
+'d2': 'static/half_correct_buttons/half_correct_letter4.png',
+'e2': 'static/half_correct_buttons/half_correct_letter5.png',
+'f2': 'static/half_correct_buttons/half_correct_letter6.png',
+'g2': 'static/half_correct_buttons/half_correct_letter7.png',
+'h2': 'static/half_correct_buttons/half_correct_letter8.png',
+'i2': 'static/half_correct_buttons/half_correct_letter9.png',
+'j2': 'static/half_correct_buttons/half_correct_letter10.png',
+'k2': 'static/half_correct_buttons/half_correct_letter11.png',
+'l2': 'static/half_correct_buttons/half_correct_letter12.png',
+'m2': 'static/half_correct_buttons/half_correct_letter13.png',
+'n2': 'static/half_correct_buttons/half_correct_letter14.png',
+'o2': 'static/half_correct_buttons/half_correct_letter15.png',
+'p2': 'static/half_correct_buttons/half_correct_letter16.png',
+'q2': 'static/half_correct_buttons/half_correct_letter17.png',
+'r2': 'static/half_correct_buttons/half_correct_letter18.png',
+'s2': 'static/half_correct_buttons/half_correct_letter19.png',
+'t2': 'static/half_correct_buttons/half_correct_letter20.png',
+'u2': 'static/half_correct_buttons/half_correct_letter21.png',
+'v2': 'static/half_correct_buttons/half_correct_letter22.png',
+'w2': 'static/half_correct_buttons/half_correct_letter23.png',
+'x2': 'static/half_correct_buttons/half_correct_letter24.png',
+'y2': 'static/half_correct_buttons/half_correct_letter25.png',
+'z2': 'static/half_correct_buttons/half_correct_letter26.png',
 
 'a3': 'static/wrong_buttons/wrong_letter1.png', 'b3': 'static/wrong_buttons/wrong_letter2.png',
 'c3': 'static/wrong_buttons/wrong_letter3.png', 'd3': 'static/wrong_buttons/wrong_letter4.png',
@@ -91,26 +104,23 @@ var stop = false
 
 var id = '';
 
+function compare(a1, a2) {
+    return a1.length == a2.length && a1.every((v,i)=>v === a2[i])
+}
+
+
+
 function change_letter(character) {
   if (stop) {
     console.log('function is stopped');
     return; }
   var keys = [row + '1', row + '2', row + '3', row + '4', row + '5'];
   for (key in keys) {
-    if (keys[key] === '66') {
-        stop = true;
-    }
     if ((letters[keys[key]]) === '') {
-        if (keys[key] === '65') {
-            stop = true; }
         break; }
 
   }
 
-  if (keys[key] === '66') {
-    console.log('66')
-    return
-  }
   letters[keys[key]] = character;
   draw()
 }
@@ -123,14 +133,36 @@ function check_word(checking_word){
     draw();
     return }
 
+    if (checking_word === 'super') {
+        document.getElementById('wordle').href = "https://en.wikipedia.org/wiki/Super_(gamer)";
+    }
+
+    if (checking_word === inp) {
+            for (ind in inp){
+                letters[row + (Number(ind) + 1)] = inp[ind] + '1';
+            }
+            draw()
+            stop = true;
+            alert('YOU WIN');
+            return
+        }
+
+    if (row === '6') {
+        if (checking_word != inp) {
+            alert('YOU LOSE');
+            stop = true;
+            return
+        }
+    }
+
     var word1 = {}
 
     for (j in checking_word) {
         if (checking_word[j] in word1) {
-            word1[checking_word[j]].push(j); }
+            word1[checking_word[j]].push(Number(j)); }
         else if (!(checking_word[j] in word1)) {
             word1[checking_word[j]] = [];
-            word1[checking_word[j]].push(j);
+            word1[checking_word[j]].push(Number(j));
         }
     }
 
@@ -145,31 +177,64 @@ function check_word(checking_word){
     }
 
     if (n_ === 5) {
-        stop = false;
-        row = String(Number(row) + 1);
         draw()
+        row = String(Number(row) + 1)
+        return
     }
 //    end of checking if all letters are not in word
+
+/////      word = {'a': [0], 'm': [1], 'o': [2], 'n': [3], 'g': [4]}
+/////      word1 = ['a': [0, 2, 4], 'y': [1, 3]]
 
     var keys = Object.keys(word).sort();
     for (key in keys) {
         if (!(keys[key] in word1)) {continue}
-//        other checking stuff
+
+        char = keys[key] /// 'a'
+        places = word[char] /// [0]
+
+        if (compare(places, word1[char])) {
+            for (i in word1[char]) {
+                letters[row + (word1[char][i] + 1)] = letters[row + (word1[char][i] + 1)] + '1';
+
+                }
+            continue
+            }
+
+        if (word1[char].length <= places.length) {
+            for (c in word1[char]) {
+                if (places.indexOf(word1[char][c]) >= 0) {
+                    letters[row + (word1[char][c] + 1)] = letters[row + (word1[char][c] + 1)] + '1';
+                }
+                if (places.indexOf(word1[char][c]) < 0) {
+                    letters[row + (word1[char][c] + 1)] = letters[row + (word1[char][c] + 1)] + '2';
+                }
+            }
+        }
+        if (word1[char].length > places.length) {
+            //// to end
+            ////// to end
+        }
+
+
     }
+    draw()
+    row = String(Number(row) + 1)
 
     return
 
 }
 
 function enter() {
-    if ((letters[String(row + '5')] === '') || (row === '6')) {
-        return; }
+    if (stop) {return}
+    if ((letters[String(row + '5')] === '') || (row === '7')) {return}
+
     check_word(letters[row + '1'] + letters[row + '2'] + letters[row + '3'] + letters[row + '4'] + letters[row + '5']);
-    stop = false;
 
 }
 
 function del() {
+    if (stop) {return}
     if (!(letters[row + '1'])) {return}
     var row_ = [row + '1', row + '2', row + '3', row + '4', row + '5'];
     for (n in row_) {
