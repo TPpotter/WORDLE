@@ -1,6 +1,6 @@
 var data = state['words']
-//var inp = data[Math.floor(Math.random() * data.length)];
-var inp = "reels";
+var inp = data[Math.floor(Math.random() * data.length)];
+//var inp = "reels";
 var word = {};
 var n = -1;
 for (j in inp) {
@@ -30,11 +30,11 @@ var links = {
 'w': 'static/buttons/letter23.png', 'x': 'static/buttons/letter24.png',
 'y': 'static/buttons/letter25.png', 'z': 'static/buttons/letter26.png',
 
-'a1': 'static/correct_buttons/correct_letter1.png', 'b1': 'static/correct_buttons/correct_letter2.png',
-'c1': 'static/correct_buttons/correct_letter3.png', 'd1': 'static/correct_buttons/correct_letter4.png',
-'e1': 'static/correct_buttons/correct_letter5.png', 'f1': 'static/correct_buttons/correct_letter6.png',
-'g1': 'static/correct_buttons/correct_letter7.png', 'h1': 'static/correct_buttons/correct_letter8.png',
-'i1': 'static/correct_buttons/correct_letter9.png', 'j1': 'static/correct_buttons/correct_letter10.png',
+'a1': 'static/correct_buttons/correct_letter1.png',  'b1': 'static/correct_buttons/correct_letter2.png',
+'c1': 'static/correct_buttons/correct_letter3.png',  'd1': 'static/correct_buttons/correct_letter4.png',
+'e1': 'static/correct_buttons/correct_letter5.png',  'f1': 'static/correct_buttons/correct_letter6.png',
+'g1': 'static/correct_buttons/correct_letter7.png',  'h1': 'static/correct_buttons/correct_letter8.png',
+'i1': 'static/correct_buttons/correct_letter9.png',  'j1': 'static/correct_buttons/correct_letter10.png',
 'k1': 'static/correct_buttons/correct_letter11.png', 'l1': 'static/correct_buttons/correct_letter12.png',
 'm1': 'static/correct_buttons/correct_letter13.png', 'n1': 'static/correct_buttons/correct_letter14.png',
 'o1': 'static/correct_buttons/correct_letter15.png', 'p1': 'static/correct_buttons/correct_letter16.png',
@@ -107,7 +107,7 @@ var id = '';
 function compare(a1, a2) {
     return a1.length == a2.length && a1.every((v,i)=>v === a2[i])
 }
-
+z
 
 
 function change_letter(character) {
@@ -125,7 +125,7 @@ function change_letter(character) {
   draw()
 }
 
-function check_word(checking_word){
+function check_word(checking_word) {
     if (data.indexOf(checking_word) < 0) {
     alert('word "' + checking_word + '" is not in dictionary');
     letters[row + '5'] = '';
@@ -166,6 +166,7 @@ function check_word(checking_word){
         }
     }
 
+    var letts = []
 //    start of checking if all letters are not in word
     var n_ = 0
     for (i in checking_word) {
@@ -173,6 +174,7 @@ function check_word(checking_word){
             n_ = n_ + 1
             letters[checking_word[i]] = checking_word[i] + '3';
             letters[row + (Number(i) + 1)] = checking_word[i] + '3';
+            letts.push(checking_word[i]);
         }
     }
 
@@ -192,12 +194,15 @@ function check_word(checking_word){
 
         char = keys[key] /// 'a'
         places = word[char] /// [0]
+        if (letts.includes(char)) {continue}
 
         if (compare(places, word1[char])) {
             for (i in word1[char]) {
                 letters[row + (word1[char][i] + 1)] = letters[row + (word1[char][i] + 1)] + '1';
 
                 }
+            letters[char] = char + '1';
+            letts.push(char)
             continue
             }
 
@@ -205,16 +210,52 @@ function check_word(checking_word){
             for (c in word1[char]) {
                 if (places.indexOf(word1[char][c]) >= 0) {
                     letters[row + (word1[char][c] + 1)] = letters[row + (word1[char][c] + 1)] + '1';
+                    letters[char] = char + '1';
+                    letts.push(char)
                 }
                 if (places.indexOf(word1[char][c]) < 0) {
                     letters[row + (word1[char][c] + 1)] = letters[row + (word1[char][c] + 1)] + '2';
+                    if (letters[char] != char + '1') {
+                        letters[char] = char + '2';
+                        letts.push(char) }
                 }
             }
         }
         if (word1[char].length > places.length) {
-            //// to end
-            ////// to end
+            var used = 0;
+
+            while (used < places.length) {
+                for (lt in word1[char]) {
+                    if (!(places.includes(word1[char][lt]))) {continue}
+                    if (places.includes(word1[char][lt])) {
+                        letters[row + (word1[char][lt] + 1)] = char + '1';
+                        letters[char] = char + '1';
+                        used = used + 1;
+                    }
+
+                }
+                if (used === places.length) {break}
+
+                for (le in word1[char]) {
+                    if (places.includes(word1[char][le])) {continue}
+                    if (used === places.length) {
+                        letters[row + (word1[char][le] + 1)] = char + '3';
+                        letts.push(char)
+                    }
+                    if (used != places.length) {
+                        letters[row + (word1[char][le] + 1)] = char + '2';
+                        if (letters[char] != char + '1') {
+                            letters[char] = char + '2';
+
+                        }
+                        used = used + 1
+                    }
+                }
+                break
         }
+
+        letts.push(char)
+      }
 
 
     }
@@ -222,7 +263,6 @@ function check_word(checking_word){
     row = String(Number(row) + 1)
 
     return
-
 }
 
 function enter() {
@@ -271,7 +311,9 @@ function draw() {
     var keys = Object.keys(letters).sort();
     for (i in keys) {
         if (!(keys[i] === '66')) {
-        document.getElementById(keys[i]).src = links[letters[keys[i]]];
+            if (links[letters[keys[i]]]) {
+                document.getElementById(keys[i]).src = links[letters[keys[i]]];
+            }
         }
     }
 }
@@ -379,4 +421,3 @@ function y() {
 function z() {
     change_letter('z')
 }
-
