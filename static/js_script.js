@@ -136,6 +136,9 @@ function check_word(checking_word) {
     if (checking_word === 'super') {
         document.getElementById('wordle').href = "https://en.wikipedia.org/wiki/Super_(gamer)";
     }
+    if (checking_word === 'ratio') {
+        document.getElementById('wordle').href = "http://localhost:8000/calc";
+    }
 
     if (checking_word === inp) {
             for (ind in inp){
@@ -149,7 +152,7 @@ function check_word(checking_word) {
 
     if (row === '6') {
         if (checking_word != inp) {
-            alert('YOU LOSE');
+            alert('YOU LOSE!' + ' Correct word is ' + inp);
             stop = true;
             return
         }

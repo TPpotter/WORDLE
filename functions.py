@@ -9,3 +9,9 @@ DATA = json.load(open('static/data.json'))
 def main():
     if request.method == 'GET':
         return render_template('base.html', state=dict(words=DATA['5']))
+
+
+@app.route('/calc')
+def second():
+    if request.method == 'GET':
+        return render_template('easter.html')

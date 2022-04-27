@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Калькулятор роста</title>
+    <style>
+    body {
+            background-image: url("static/easter_background.png");
+            background-repeat:no-repeat;
+            background-size:cover;
+        }
+
+    </style>
+</head>
+<body>
+    <center><font size="+6" style="color: red;">КАЛЬКУЛЯТОР РОСТА</font></center>
+    <br><br><br><br><br><br><br>
+    <center>
+        <h2 style="color: yellow">Введите ваш рост (в сантиметрах)</h2>
+        <input type="text" id="input" style="font-size: 50px; width: 200px; color: black">
+        <br><br>
+        <button onclick="alerting()" style="width: 90px; height: 60px; color: DarkRed">ПОСЧИТАТЬ</button>
+    </center>
+
+    <script>
+        function alerting() {
+            var number11 = 100;
+            var number11 = document.getElementById('input').value;
+            if ((isNaN(number11) || (Number(number11) <= 0))) { alert('неверный ввод') }
+            else if ([11, 12, 13, 14, 15, 16, 17, 18, 19].includes(Number(number11.slice(number11.length - 2, number11.length)))) { alert('Ваш рост: ' + number11 + ' сантиметров') }
+            else if (number11[number11.length - 1] === '1') { alert('Ваш рост: ' + number11 + ' сантиметр') }
+            else if ([0, 5, 6, 7, 8, 9].includes(Number(number11[number11.length - 1]))) { alert('Ваш рост: ' + number11 + ' сантиметров') }
+            else if ([2, 3, 4].includes(Number(number11[number11.length - 1]))) { alert('Ваш рост: ' + number11 + ' сантиметра') }
+
+  }
+    </script>
+</body>
+</html>
